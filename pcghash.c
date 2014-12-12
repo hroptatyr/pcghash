@@ -89,7 +89,7 @@ main(int argc, char *argv[])
 		pcgh_t sl;
 
 		printf("h(%lx)", x);
-		for (sl = pcgmakehash(x, 16U);
+		for (sl = pcgmakehash(x, 64U);
 		     (printf(" -> %x", sl.next), set & (1ULL << sl.next));
 		     sl = pcghash(sl));
 		set |= 1ULL << sl.next;
