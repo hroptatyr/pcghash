@@ -30,5 +30,5 @@ all: $(TARGETS)
 clean:
 	rm -f *.o $(TARGETS)
 
-pcghash: pcg_basic.o pcghash.o
-pcghash.o: pcghash.c pcg_basic.h
+pcghash: pcghash.o
+pcghash.o: pcghash.c pcghash.h
