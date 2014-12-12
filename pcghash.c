@@ -83,18 +83,27 @@ int
 main(int argc, char *argv[])
 {
 	uint64_t set = 0ULL;
+	size_t nc = 0UL;
 
 	for (int i = 1; i < argc; i++) {
 		long unsigned int x = strtoul(argv[i], NULL, 0);
 		pcgh_t sl;
+		size_t i = 0U;
 
 		printf("h(%lx)", x);
 		for (sl = pcgmakehash(x, 64U);
-		     (printf(" -> %x", sl.next), set & (1ULL << sl.next));
-		     sl = pcghash(sl));
+		     (printf(" -> %x", sl.next), set & (1ULL << sl.next)) &&
+			     i < 64U;
+		     sl = pcghash(sl), nc++, i++);
 		set |= 1ULL << sl.next;
-		putchar('\n');
+		if (i < 64U) {
+			putchar('\n');
+		} else {
+			puts(" PERIOD");
+		}
 	}
+	printf("average collisions/hasing %.3f\n",
+	       (double)nc / (double)(argc - 1));
 	return 0;
 }
 #endif	/* STANDALONE */
